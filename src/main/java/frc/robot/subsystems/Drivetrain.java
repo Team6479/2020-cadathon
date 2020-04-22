@@ -36,7 +36,7 @@ public class Drivetrain extends SubsystemBase implements TankDrive{
     rightFront.configFactoryDefault();
     rightBack.configFactoryDefault();
 
-    // left Back follows left Front and right Back follows right Front
+    // back motors follow front motors
     leftBack.follow(leftFront);
     rightBack.follow(rightFront);
 
