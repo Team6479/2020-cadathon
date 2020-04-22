@@ -16,7 +16,7 @@ import com.team6479.lib.subsystems.TankDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DrivetrainConstants;
 
-public class Drivetrain extends SubsystemBase implements TankDrive{
+public class Drivetrain extends SubsystemBase implements TankDrive {
   
   private TalonFX leftFront;
   private TalonFX leftBack;
@@ -36,7 +36,7 @@ public class Drivetrain extends SubsystemBase implements TankDrive{
     rightFront.configFactoryDefault();
     rightBack.configFactoryDefault();
 
-    // left Back follows left Front and right Back follows right Front
+    // back motors follow front motors
     leftBack.follow(leftFront);
     rightBack.follow(rightFront);
 
