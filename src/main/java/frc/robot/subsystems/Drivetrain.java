@@ -12,12 +12,11 @@ import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.team6479.lib.subsystems.TankDrive;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DrivetrainConstants;
 
-public class Drivetrain extends SubsystemBase implements TankDrive{
-  
+public class Drivetrain extends SubsystemBase implements TankDrive {
+
   private TalonFX leftFront;
   private TalonFX leftBack;
   private TalonFX rightFront;
@@ -74,8 +73,10 @@ public class Drivetrain extends SubsystemBase implements TankDrive{
    */
   @Override
   public void arcadeDrive(double forward, double turn) {
-    leftFront.set(ControlMode.PercentOutput, forward, DemandType.ArbitraryFeedForward, +turn);
-    rightFront.set(ControlMode.PercentOutput, forward, DemandType.ArbitraryFeedForward, -turn);
+    leftFront.set(ControlMode.PercentOutput, forward,
+                  DemandType.ArbitraryFeedForward, +turn);
+    rightFront.set(ControlMode.PercentOutput, forward,
+                   DemandType.ArbitraryFeedForward, -turn);
   }
 
   /**
