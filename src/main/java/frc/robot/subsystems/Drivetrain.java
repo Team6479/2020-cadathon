@@ -16,7 +16,7 @@ import com.team6479.lib.subsystems.TankDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DrivetrainConstants;
 
-public class Drivetrain extends SubsystemBase implements TankDrive{
+public class Drivetrain extends SubsystemBase implements TankDrive {
   
   private TalonFX leftFront;
   private TalonFX leftBack;
