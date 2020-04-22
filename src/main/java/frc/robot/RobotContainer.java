@@ -44,8 +44,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     drivetrain.setDefaultCommand(new TeleopTankDrive(drivetrain, 
-    () -> -xbox.getY(Hand.kLeft),
-    () -> xbox.getX(Hand.kRight)));
+        () -> -xbox.getY(Hand.kLeft),
+        () -> xbox.getX(Hand.kRight)));
   }
 
 
