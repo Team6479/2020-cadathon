@@ -24,24 +24,29 @@ public class Drivetrain extends SubsystemBase implements TankDrive{
   private TalonFX rightBack;
 
   public Drivetrain() {
+    // construct motors
     leftFront = new TalonFX(DrivetrainConstants.LEFT_FRONT);
     leftBack = new TalonFX(DrivetrainConstants.LEFT_BACK);
     rightFront = new TalonFX(DrivetrainConstants.RIGHT_FRONT);
     rightBack = new TalonFX(DrivetrainConstants.RIGHT_BACK);
 
+    // set motors to factory defaults on startup
     leftFront.configFactoryDefault();
     leftBack.configFactoryDefault();
     rightFront.configFactoryDefault();
     rightBack.configFactoryDefault();
 
+    // left Back follows left Front and right Back follows right Front
     leftBack.follow(leftFront);
     rightBack.follow(rightFront);
 
+    // set neutral modes
     leftFront.setNeutralMode(NeutralMode.Brake);
     leftBack.setNeutralMode(NeutralMode.Brake);
     rightFront.setNeutralMode(NeutralMode.Brake);
     rightBack.setNeutralMode(NeutralMode.Brake);
 
+    // set correct motors to be inverted
     leftFront.setInverted(false);
     leftBack.setInverted(false);
     rightFront.setInverted(true);
@@ -53,18 +58,31 @@ public class Drivetrain extends SubsystemBase implements TankDrive{
     // This method will be called once per scheduler run
   }
 
+  /**
+   * Stops the drivetrain
+   */
   @Override
   public void stop() {
     leftFront.set(ControlMode.PercentOutput, 0);
     rightFront.set(ControlMode.PercentOutput, 0);
   }
 
+  /**
+   * Set arcade drive values to motor
+   * @param forward Percent value to move forward
+   * @param turn Percent value to turn
+   */
   @Override
   public void arcadeDrive(double forward, double turn) {
     leftFront.set(ControlMode.PercentOutput, forward, DemandType.ArbitraryFeedForward, +turn);
     rightFront.set(ControlMode.PercentOutput, forward, DemandType.ArbitraryFeedForward, -turn);
   }
 
+  /**
+   * Set tank drive values to motor
+   * @param leftSpeed Percent speed of the left side
+   * @param rightSpeed Percent speed of the right side
+   */
   @Override
   public void tankDrive(double leftSpeed, double rightSpeed) {
     leftFront.set(ControlMode.PercentOutput, leftSpeed);
