@@ -21,6 +21,7 @@ public final class Constants {
         public final static int MOTOR_LEFT_BACK = 0;
         public final static int MOTOR_RIGHT_FRONT = 0;
         public final static int MOTOR_RIGHT_BACK = 0;
+    }
     public static final class EndgameActuatorConstants {
         public static final int ACTUATOR_SOLENOID = 0;
     }
