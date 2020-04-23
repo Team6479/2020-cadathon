@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
+/* CopymotorRight (c) 2019 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -18,39 +18,39 @@ import frc.robot.Constants.DrivetrainConstants;
 
 public class Drivetrain extends SubsystemBase implements TankDrive {
   
-  private TalonFX leftFront;
-  private TalonFX leftBack;
-  private TalonFX rightFront;
-  private TalonFX rightBack;
+  private TalonFX motorLeftFront;
+  private TalonFX motorLeftBack;
+  private TalonFX motorRightFront;
+  private TalonFX motorRightBack;
 
   public Drivetrain() {
     // construct motors
-    leftFront = new TalonFX(DrivetrainConstants.LEFT_FRONT);
-    leftBack = new TalonFX(DrivetrainConstants.LEFT_BACK);
-    rightFront = new TalonFX(DrivetrainConstants.RIGHT_FRONT);
-    rightBack = new TalonFX(DrivetrainConstants.RIGHT_BACK);
+    motorLeftFront = new TalonFX(DrivetrainConstants.MOTOR_LEFT_FRONT);
+    motorLeftBack = new TalonFX(DrivetrainConstants.MOTOR_LEFT_BACK);
+    motorRightFront = new TalonFX(DrivetrainConstants.MOTOR_RIGHT_FRONT);
+    motorRightBack = new TalonFX(DrivetrainConstants.MOTOR_RIGHT_BACK);
 
     // set motors to factory defaults on startup
-    leftFront.configFactoryDefault();
-    leftBack.configFactoryDefault();
-    rightFront.configFactoryDefault();
-    rightBack.configFactoryDefault();
+    motorLeftFront.configFactoryDefault();
+    motorLeftBack.configFactoryDefault();
+    motorRightFront.configFactoryDefault();
+    motorRightBack.configFactoryDefault();
 
     // back motors follow front motors
-    leftBack.follow(leftFront);
-    rightBack.follow(rightFront);
+    motorLeftBack.follow(motorLeftFront);
+    motorRightBack.follow(motorRightFront);
 
     // set neutral modes
-    leftFront.setNeutralMode(NeutralMode.Brake);
-    leftBack.setNeutralMode(NeutralMode.Brake);
-    rightFront.setNeutralMode(NeutralMode.Brake);
-    rightBack.setNeutralMode(NeutralMode.Brake);
+    motorLeftFront.setNeutralMode(NeutralMode.Brake);
+    motorLeftBack.setNeutralMode(NeutralMode.Brake);
+    motorRightFront.setNeutralMode(NeutralMode.Brake);
+    motorRightBack.setNeutralMode(NeutralMode.Brake);
 
     // set correct motors to be inverted
-    leftFront.setInverted(false);
-    leftBack.setInverted(false);
-    rightFront.setInverted(true);
-    rightBack.setInverted(true);
+    motorLeftFront.setInverted(false);
+    motorLeftBack.setInverted(false);
+    motorRightFront.setInverted(true);
+    motorRightBack.setInverted(true);
   }
 
   @Override
@@ -63,8 +63,8 @@ public class Drivetrain extends SubsystemBase implements TankDrive {
    */
   @Override
   public void stop() {
-    leftFront.set(ControlMode.PercentOutput, 0);
-    rightFront.set(ControlMode.PercentOutput, 0);
+    motorLeftFront.set(ControlMode.PercentOutput, 0);
+    motorRightFront.set(ControlMode.PercentOutput, 0);
   }
 
   /**
@@ -74,18 +74,18 @@ public class Drivetrain extends SubsystemBase implements TankDrive {
    */
   @Override
   public void arcadeDrive(double forward, double turn) {
-    leftFront.set(ControlMode.PercentOutput, forward, DemandType.ArbitraryFeedForward, +turn);
-    rightFront.set(ControlMode.PercentOutput, forward, DemandType.ArbitraryFeedForward, -turn);
+    motorLeftFront.set(ControlMode.PercentOutput, forward, DemandType.ArbitraryFeedForward, +turn);
+    motorRightFront.set(ControlMode.PercentOutput, forward, DemandType.ArbitraryFeedForward, -turn);
   }
 
   /**
    * Set tank drive values to motor
-   * @param leftSpeed Percent speed of the left side
-   * @param rightSpeed Percent speed of the right side
+   * @param motorLeftSpeed Percent speed of the left side
+   * @param motorRightSpeed Percent speed of the right side
    */
   @Override
   public void tankDrive(double leftSpeed, double rightSpeed) {
-    leftFront.set(ControlMode.PercentOutput, leftSpeed);
-    rightFront.set(ControlMode.PercentOutput, rightSpeed);
+    motorLeftFront.set(ControlMode.PercentOutput, leftSpeed);
+    motorRightFront.set(ControlMode.PercentOutput, rightSpeed);
   }
 }
