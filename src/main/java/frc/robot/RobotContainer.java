@@ -7,14 +7,22 @@
 
 package frc.robot;
 
+<<<<<<< HEAD
 import com.team6479.lib.commands.TeleopTankDrive;
+=======
+>>>>>>> devel
 import com.team6479.lib.controllers.CBXboxController;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+<<<<<<< HEAD
 import frc.robot.subsystems.Drivetrain;
+=======
+import frc.robot.subsystems.EndgameActuator;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+>>>>>>> devel
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -26,8 +34,9 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private final CBXboxController xbox = new CBXboxController(0);
-  private final Drivetrain drivetrain = new Drivetrain(); 
 
+  private final Drivetrain drivetrain = new Drivetrain(); 
+  private final EndgameActuator endgameActuator = new EndgameActuator();
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -46,6 +55,9 @@ public class RobotContainer {
     drivetrain.setDefaultCommand(new TeleopTankDrive(drivetrain, 
         () -> -xbox.getY(Hand.kLeft),
         () -> xbox.getX(Hand.kRight)));
+        
+    xbox.getButton(XboxController.Button.kA)
+        .whenPressed(new InstantCommand(endgameActuator::toggle, endgameActuator));
   }
 
 
