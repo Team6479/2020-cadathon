@@ -17,10 +17,19 @@ package frc.robot;
  */
 public final class Constants {
 
-    public static final class ElevatorConstants{
+    public static final class ElevatorConstants {
         public static final int MOTOR_FRONT = 0;
         public static final int MOTOR_BACK = 1;
         public static final int CARRIAGE_MOTOR = 2;
         public static final int LIMIT_SWITCH = 0;
+    }
+    public static final class DrivetrainConstants {
+        public final static int MOTOR_LEFT_FRONT = 0;
+        public final static int MOTOR_LEFT_BACK = 0;
+        public final static int MOTOR_RIGHT_FRONT = 0;
+        public final static int MOTOR_RIGHT_BACK = 0;
+    }
+    public static final class EndgameActuatorConstants {
+        public static final int ACTUATOR_SOLENOID = 0;
     }
 }
