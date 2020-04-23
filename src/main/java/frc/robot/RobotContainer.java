@@ -42,7 +42,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     xbox.getButton(XboxController.Button.kA)
-      .whenPressed(new InstantCommand(endgameActuator::toggle, endgameActuator));
+        .whenPressed(new InstantCommand(endgameActuator::toggle, endgameActuator));
   }
 
 
