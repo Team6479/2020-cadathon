@@ -7,22 +7,16 @@
 
 package frc.robot;
 
-<<<<<<< HEAD
 import com.team6479.lib.commands.TeleopTankDrive;
-=======
->>>>>>> devel
 import com.team6479.lib.controllers.CBXboxController;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-<<<<<<< HEAD
 import frc.robot.subsystems.Drivetrain;
-=======
 import frc.robot.subsystems.EndgameActuator;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
->>>>>>> devel
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
