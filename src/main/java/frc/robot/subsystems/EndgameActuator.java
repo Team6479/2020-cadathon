@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.EndgameActuatorConstants;
 
 public class EndgameActuator extends SubsystemBase {
-  
+
   private Solenoid actuator;
 
   public EndgameActuator() {
@@ -25,7 +25,7 @@ public class EndgameActuator extends SubsystemBase {
   }
 
   public void toggle() {
-    if(actuator.get()) {
+    if (actuator.get()) {
       actuator.set(false);
     } else {
       actuator.set(true);
