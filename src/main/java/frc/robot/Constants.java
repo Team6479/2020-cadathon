@@ -16,4 +16,7 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public static final class EndgameActuatorConstants {
+        public static final int ACTUATOR_SOLENOID = 0;
+    }
 }
