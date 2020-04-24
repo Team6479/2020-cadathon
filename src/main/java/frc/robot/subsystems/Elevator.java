@@ -19,7 +19,9 @@ public class Elevator extends SubsystemBase {
   
   private TalonFX frontMotor;
   private TalonFX backMotor;
-  private final DigitalInput limitSwitch = new DigitalInput(Constants.ElevatorConstants.LIMIT_SWITCH);
+  private final DigitalInput plateLimitSwitch = new DigitalInput(Constants.ElevatorConstants.PLATE_LIMIT_SWITCH);
+  private final DigitalInput topLimitSwitch = new DigitalInput(Constants.ElevatorConstants.TOP_LIMIT_SWITCH);
+  private final DigitalInput bottomLimitSwitch = new DigitalInput(Constants.ElevatorConstants.BOTTOM_LIMIT_SWITCH);
   
   /**
    * Creates a new Elevator.
@@ -42,20 +44,28 @@ public class Elevator extends SubsystemBase {
 
   }
 
-  public void ascend(){
+  public void ascend() {
     frontMotor.set(ControlMode.PercentOutput, 0.5);
   }
 
-  public void descend(){
+  public void descend() {
     frontMotor.set(ControlMode.PercentOutput, -0.5);
   }
 
-  public void stop(){
+  public void stop() { 
     frontMotor.set(ControlMode.PercentOutput, 0);
   }
   
-  public boolean isSwitchPressed(){
-    return !limitSwitch.get();
+  public boolean isPlateSwitchPressed() {
+    return !plateLimitSwitch.get();
+  }
+
+  public boolean isTopSwitchPressed() {
+    return !topLimitSwitch.get();
+  }
+
+  public boolean isBottomSwitchPressed() {
+    return !bottomLimitSwitch.get();
   }
 
   @Override

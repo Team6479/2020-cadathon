@@ -21,7 +21,9 @@ public final class Constants {
         public static final int MOTOR_FRONT = 0;
         public static final int MOTOR_BACK = 1;
         public static final int CARRIAGE_MOTOR = 2;
-        public static final int LIMIT_SWITCH = 0;
+        public static final int PLATE_LIMIT_SWITCH = 0;
+        public static final int TOP_LIMIT_SWITCH = 1;
+        public static final int BOTTOM_LIMIT_SWITCH = 2;
     }
     public static final class DrivetrainConstants {
         public final static int MOTOR_LEFT_FRONT = 0;
