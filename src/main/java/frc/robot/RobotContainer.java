@@ -14,9 +14,13 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.EndgameActuator;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.commands.AscendToTop;
+import frc.robot.commands.DescendToBottom;
+import frc.robot.commands.DescendToWeight;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.EndgameActuator;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -26,6 +30,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+
+  private final Elevator elevator = new Elevator();
 
   private final CBXboxController xbox = new CBXboxController(0);
 
@@ -52,6 +58,16 @@ public class RobotContainer {
         
     xbox.getButton(XboxController.Button.kA)
         .whenPressed(new InstantCommand(endgameActuator::toggle, endgameActuator));
+
+
+    xbox.getButton(XboxController.Button.kBumperLeft)
+        .whenPressed(new DescendToBottom(elevator));
+
+    xbox.getButton(XboxController.Button.kBumperRight)
+        .whenPressed(new AscendToTop(elevator));
+
+    xbox.getButton(XboxController.Button.kY)
+        .whenPressed(new DescendToWeight(elevator));
   }
 
 
