@@ -34,4 +34,16 @@ public final class Constants {
     public static final class EndgameActuatorConstants {
         public static final int ACTUATOR_SOLENOID = 0;
     }
+
+    public static final class IntakeConstants {
+        public static final int INTAKE_ARM_LEFT_1 = 0;
+        public static final int INTAKE_ARM_LEFT_2 = 0;
+        public static final int INTAKE_ARM_RIGHT_1 = 0;
+        public static final int INTAKE_ARM_RIGHT_2 = 0;
+
+        public static final int INTAKE_ROLLERS_LEFT = 0;
+        public static final int INTAKE_ROLLERS_RIGHT = 0;
+
+        public static final int PLATE_SENSOR = 0;
+    }
 }
