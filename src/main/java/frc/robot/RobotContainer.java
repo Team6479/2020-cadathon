@@ -17,7 +17,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.IntakeWeightPlate;
+import frc.robot.commands.AscendToTop;
+import frc.robot.commands.DescendToBottom;
+import frc.robot.commands.DescendToWeight;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.EndgameActuator;
 import frc.robot.subsystems.Intake;
 
@@ -29,6 +33,8 @@ import frc.robot.subsystems.Intake;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+
+  private final Elevator elevator = new Elevator();
 
   private final CBXboxController xbox = new CBXboxController(0);
 
@@ -68,6 +74,15 @@ public class RobotContainer {
           new InstantCommand(intake::rollersReverse, intake), 
           new InstantCommand(intake::openArms, intake)
         )).whenReleased(new InstantCommand(intake::rollersOff, intake));
+
+    xbox.getButton(XboxController.Button.kBumperLeft)
+        .whenPressed(new DescendToBottom(elevator));
+
+    xbox.getButton(XboxController.Button.kBumperRight)
+        .whenPressed(new AscendToTop(elevator));
+
+    xbox.getButton(XboxController.Button.kY)
+        .whenPressed(new DescendToWeight(elevator));
   }
 
 
