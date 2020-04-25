@@ -17,9 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.IntakeWeightPlate;
-import frc.robot.commands.AscendToTop;
-import frc.robot.commands.DescendToBottom;
-import frc.robot.commands.DescendToWeight;
+import frc.robot.commands.TeleopElevator;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.EndgameActuator;
@@ -75,14 +73,8 @@ public class RobotContainer {
           new InstantCommand(intake::openArms, intake)
         )).whenReleased(new InstantCommand(intake::rollersOff, intake));
 
-    xbox.getButton(XboxController.Button.kBumperLeft)
-        .whenPressed(new DescendToBottom(elevator));
-
-    xbox.getButton(XboxController.Button.kBumperRight)
-        .whenPressed(new AscendToTop(elevator));
-
-    xbox.getButton(XboxController.Button.kY)
-        .whenPressed(new DescendToWeight(elevator));
+    elevator.setDefaultCommand(new TeleopElevator(elevator, 
+        () -> xbox.getTriggerAxis(Hand.kRight) - xbox.getTriggerAxis(Hand.kLeft)));
   }
 
 

@@ -22,6 +22,8 @@ public class Elevator extends SubsystemBase {
   private final DigitalInput plateLimitSwitch = new DigitalInput(Constants.ElevatorConstants.PLATE_LIMIT_SWITCH);
   private final DigitalInput topLimitSwitch = new DigitalInput(Constants.ElevatorConstants.TOP_LIMIT_SWITCH);
   private final DigitalInput bottomLimitSwitch = new DigitalInput(Constants.ElevatorConstants.BOTTOM_LIMIT_SWITCH);
+
+  private boolean canDescend = true;
   
   /**
    * Creates a new Elevator.
@@ -44,12 +46,8 @@ public class Elevator extends SubsystemBase {
 
   }
 
-  public void ascend() {
-    frontMotor.set(ControlMode.PercentOutput, 0.5);
-  }
-
-  public void descend() {
-    frontMotor.set(ControlMode.PercentOutput, -0.5);
+  public void move(double speed) {
+    frontMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void stop() { 
@@ -66,6 +64,18 @@ public class Elevator extends SubsystemBase {
 
   public boolean isBottomSwitchPressed() {
     return !bottomLimitSwitch.get();
+  }
+
+  public void toggleCanDescend(){
+    canDescend = !canDescend;
+  }
+
+  public boolean canDescend(){
+    return canDescend;
+  }
+
+  public void setCanDescend(boolean canDesc){
+    canDescend = canDesc;
   }
 
   @Override
