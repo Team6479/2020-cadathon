@@ -7,29 +7,70 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
+import com.team6479.lib.wpioverride.XboxController;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Elevator;
 
-public class AscendToTop extends CommandBase {
+public class TeleopElevator extends CommandBase {
   private Elevator elevator;
+  private final DoubleSupplier speed;
+  private boolean switchPressed;
+  
   /**
-   * Creates a new AscendToTop.
+   * Creates a new TeleopElevator.
    */
-  public AscendToTop(Elevator elevator) {
+  public TeleopElevator(Elevator elevator, DoubleSupplier speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.elevator = elevator;
     addRequirements(elevator);
+
+    this.speed = speed;
+    switchPressed = false;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    elevator.ascend();
+    //do we have to reset the limit switches here?
+    elevator.setCanDescend(true);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if(speed.getAsDouble() < 0) {
+
+      if(!elevator.isBottomSwitchPressed() && elevator.canDescend()) {
+        
+        if(!switchPressed && elevator.isPlateSwitchPressed()){
+          elevator.stop();
+          elevator.setCanDescend(false);
+          switchPressed = true;
+        } else {
+          elevator.move(speed.getAsDouble());
+          switchPressed = elevator.isPlateSwitchPressed();
+        }
+
+      } else {
+        elevator.stop();
+      }
+      
+
+    } else {
+
+      elevator.setCanDescend(true);
+      if(!elevator.isTopSwitchPressed()) {
+        elevator.move(speed.getAsDouble());
+      } else {
+        elevator.stop();
+      }
+
+    }
+
   }
 
   // Called once the command ends or is interrupted.
@@ -41,6 +82,6 @@ public class AscendToTop extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return elevator.isTopSwitchPressed();
+    return false;
   }
 }
