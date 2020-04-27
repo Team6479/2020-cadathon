@@ -18,11 +18,13 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+import frc.robot.commands.IntakeFlip;
 import frc.robot.commands.TeleopElevator;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.EndgameActuator;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakePivot;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -42,6 +44,8 @@ public class RobotContainer {
   private final EndgameActuator endgameActuator = new EndgameActuator();
 
   private final Intake intake = new Intake(); 
+
+  private final IntakePivot intakePivot = new IntakePivot();
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -79,6 +83,9 @@ public class RobotContainer {
             new InstantCommand(intake::openArms, intake),
             new WaitCommand(1), 
             new InstantCommand(intake::rollersOff, intake)));
+
+    xbox.getButton(XboxController.Button.kA)
+        .whenPressed(new IntakeFlip(intakePivot));
 
     elevator.setDefaultCommand(new TeleopElevator(elevator, 
         () -> xbox.getTriggerAxis(Hand.kRight) - xbox.getTriggerAxis(Hand.kLeft)));

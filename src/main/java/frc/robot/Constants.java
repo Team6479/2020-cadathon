@@ -46,4 +46,12 @@ public final class Constants {
 
         public static final int PLATE_SENSOR = 0;
     }
+
+    public static final class IntakePivotConstants {
+        public static final int MOTOR_RIGHT = 0;
+        public static final int MOTOR_LEFT = 1;
+
+        public static final int SENSOR_IN = 0;
+        public static final int SENSOR_OUT = 1;
+    }
 }
