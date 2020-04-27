@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import com.team6479.lib.buttons.MultiButton;
 import com.team6479.lib.commands.TeleopTankDrive;
 import com.team6479.lib.controllers.CBXboxController;
 
@@ -62,8 +63,9 @@ public class RobotContainer {
         () -> -xbox.getY(Hand.kLeft),
         () -> xbox.getX(Hand.kRight)));
         
-    xbox.getButton(XboxController.Button.kA)
-        .whenPressed(new InstantCommand(endgameActuator::toggle, endgameActuator));
+    xbox.getButton(XboxController.Button.kStart)
+        .and(xbox.getButton(XboxController.Button.kBack))
+        .whenActive(new InstantCommand(endgameActuator::toggle, endgameActuator));
 
     xbox.getButton(XboxController.Button.kBumperLeft)
         .whenPressed(new SequentialCommandGroup(
