@@ -7,7 +7,6 @@
 
 package frc.robot;
 
-import com.team6479.lib.buttons.MultiButton;
 import com.team6479.lib.commands.TeleopTankDrive;
 import com.team6479.lib.controllers.CBXboxController;
 
@@ -19,7 +18,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-import frc.robot.commands.IntakeWeightPlate;
 import frc.robot.commands.TeleopElevator;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
