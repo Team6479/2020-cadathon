@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.commands.IntakeWeightPlate;
 import frc.robot.commands.TeleopElevator;
 import frc.robot.subsystems.Drivetrain;
@@ -63,15 +65,20 @@ public class RobotContainer {
     xbox.getButton(XboxController.Button.kA)
         .whenPressed(new InstantCommand(endgameActuator::toggle, endgameActuator));
 
-    xbox.getButton(XboxController.Button.kX)
-        .whenPressed(new IntakeWeightPlate(intake));
-
-    // Drop weight plate, hold B to drop, let go to disable rollers
-    xbox.getButton(XboxController.Button.kB)
+    xbox.getButton(XboxController.Button.kBumperLeft)
         .whenPressed(new SequentialCommandGroup(
-          new InstantCommand(intake::rollersReverse, intake), 
-          new InstantCommand(intake::openArms, intake)
-        )).whenReleased(new InstantCommand(intake::rollersOff, intake));
+            new InstantCommand(intake::rollersForward, intake),
+            new WaitUntilCommand(intake::hasPlate),
+            new InstantCommand(intake::closeArms, intake),
+            new InstantCommand(intake::rollersOff, intake)));
+        
+
+    xbox.getButton(XboxController.Button.kBumperRight)
+        .whenPressed(new SequentialCommandGroup(
+            new InstantCommand(intake::rollersReverse, intake),
+            new InstantCommand(intake::openArms, intake),
+            new WaitCommand(1), 
+            new InstantCommand(intake::rollersOff, intake)));
 
     elevator.setDefaultCommand(new TeleopElevator(elevator, 
         () -> xbox.getTriggerAxis(Hand.kRight) - xbox.getTriggerAxis(Hand.kLeft)));
