@@ -7,11 +7,24 @@
 
 package frc.robot;
 
+import com.team6479.lib.commands.TeleopTankDrive;
+import com.team6479.lib.controllers.CBXboxController;
+
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+import frc.robot.commands.IntakeFlip;
+import frc.robot.commands.TeleopElevator;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.EndgameActuator;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakePivot;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -21,12 +34,18 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private final Elevator elevator = new Elevator();
 
+  private final CBXboxController xbox = new CBXboxController(0);
 
+  private final Drivetrain drivetrain = new Drivetrain(); 
 
+  private final EndgameActuator endgameActuator = new EndgameActuator();
+
+  private final Intake intake = new Intake(); 
+
+  private final IntakePivot intakePivot = new IntakePivot();
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -42,6 +61,34 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    drivetrain.setDefaultCommand(new TeleopTankDrive(drivetrain, 
+        () -> -xbox.getY(Hand.kLeft),
+        () -> xbox.getX(Hand.kRight)));
+        
+    xbox.getButton(XboxController.Button.kStart)
+        .and(xbox.getButton(XboxController.Button.kBack))
+        .whenActive(new InstantCommand(endgameActuator::toggle, endgameActuator));
+
+    xbox.getButton(XboxController.Button.kBumperLeft)
+        .whenPressed(new SequentialCommandGroup(
+            new InstantCommand(intake::rollersForward, intake),
+            new WaitUntilCommand(intake::hasPlate),
+            new InstantCommand(intake::closeArms, intake),
+            new InstantCommand(intake::rollersOff, intake)));
+        
+
+    xbox.getButton(XboxController.Button.kBumperRight)
+        .whenPressed(new SequentialCommandGroup(
+            new InstantCommand(intake::rollersReverse, intake),
+            new InstantCommand(intake::openArms, intake),
+            new WaitCommand(1), 
+            new InstantCommand(intake::rollersOff, intake)));
+
+    xbox.getButton(XboxController.Button.kA)
+        .whenPressed(new IntakeFlip(intakePivot));
+
+    elevator.setDefaultCommand(new TeleopElevator(elevator, 
+        () -> xbox.getTriggerAxis(Hand.kRight) - xbox.getTriggerAxis(Hand.kLeft)));
   }
 
 
@@ -52,6 +99,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return null;
   }
 }
